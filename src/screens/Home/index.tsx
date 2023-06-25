@@ -26,7 +26,6 @@ export default function Home() {
       style: 'cancel'
     }
     ])
-    console.log(`Você removeu ${name} da lista de participantes`);
   }
 
   return (
