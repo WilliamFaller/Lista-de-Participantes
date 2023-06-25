@@ -5,24 +5,25 @@ import { Participant } from '../../components/Participant';
 
 export default function Home() {
 
-  const [participants, setParticipants] = useState(['João']);
+  const [participants, setParticipants] = useState<string[]>([]);
+  const [participantsName, setParticipantsName] = useState('');
 
   function handleParticipantAdd() {
-    if (participants.includes('William')) {
+    if (participants.includes(participantsName)) {
       return Alert.alert('Participante existente', 'Já existe um participante na lista com esse nome.')
     }
-    setParticipants(prevState => [...prevState, 'William']);
+    setParticipants(prevState => [...prevState, participantsName]);
+    setParticipantsName('');
   }
 
   function handleParticipantRemove(name: string) {
     Alert.alert('Remover participante', `Deseja remover ${name} da lista de participantes?`, [{
       text: 'Sim',
-      onPress: () => Alert.alert('Removido com sucesso!')
+      onPress: () => setParticipants(participants.filter(participant => participant !== name))
     },
     {
       text: 'Não',
-      style: 'cancel',
-      //onPress: () => Alert.alert('Remoção cancelada!')
+      style: 'cancel'
     }
     ])
     console.log(`Você removeu ${name} da lista de participantes`);
@@ -38,6 +39,8 @@ export default function Home() {
           placeholderTextColor={'#6b6b6b'}
           style={styles.input}
           keyboardType='default'
+          onChangeText={setParticipantsName}
+          value={participantsName}
         />
         <TouchableOpacity style={styles.button} onPress={handleParticipantAdd}>
           <Text style={styles.buttonText}>+</Text>
